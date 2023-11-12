@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    {
+      "name": "Frontmatter",
+      "className": "Frontmatter",
+      "description": "Adds text to the editor.",
+      "path": "src/frontmatter.ts",
+      "uiComponents": [
+        {
+          "name": "frontmatterButton",
+          "type": "Button",
+          "iconPath": "theme/icons/ckeditor.svg"
+        }
+      ]
+    }
+  ]
+}
