@@ -7,9 +7,9 @@
       "path": "src/frontmatter.ts",
       "uiComponents": [
         {
-          "name": "frontmatterButton",
+          "name": "frontmatteron",
           "type": "Button",
-          "iconPath": "theme/icons/ckeditor.svg"
+          "iconPath": "theme/icons/frontmatter.svg"
         }
       ]
     }

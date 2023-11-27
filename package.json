@@ -1,7 +1,7 @@
 {
   "name": "@witoso/ckeditor5-frontmatter",
   "version": "0.0.1",
-  "description": "A plugin for CKEditor 5.",
+  "description": "A plugin for CKEditor 5 that handles markdown frontmatter.",
   "keywords": [
     "ckeditor",
     "ckeditor5",
@@ -11,8 +11,8 @@
     "ckeditor5-dll",
     "ckeditor5-package-generator"
   ],
-  "main": "src/index.ts",
-  "license": "MIT",
+  "main": "src/index.js",
+  "license": "GPL-2.0-or-later",
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=5.7.1"
@@ -39,6 +39,7 @@
     "@ckeditor/ckeditor5-inspector": ">=4.1.0",
     "@ckeditor/ckeditor5-link": ">=40.0.0",
     "@ckeditor/ckeditor5-list": ">=40.0.0",
+    "@ckeditor/ckeditor5-markdown-gfm": ">=40.0.0",
     "@ckeditor/ckeditor5-media-embed": ">=40.0.0",
     "@ckeditor/ckeditor5-package-tools": "^1.1.0",
     "@ckeditor/ckeditor5-paragraph": ">=40.0.0",
@@ -47,6 +48,7 @@
     "@ckeditor/ckeditor5-upload": ">=40.0.0",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.1",
+    "@types/sinon": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "~5.43.0",
     "@typescript-eslint/parser": "^5.18.0",
     "ckeditor5": ">=40.0.0",

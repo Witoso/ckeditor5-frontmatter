@@ -1,9 +1,14 @@
 @witoso/ckeditor5-frontmatter
 =============================
 
+
+
+
+## Development
+
 This package was created by the [ckeditor5-package-generator](https://www.npmjs.com/package/ckeditor5-package-generator) package.
 
-## Table of contents
+### Table of contents
 
 * [Developing the package](#developing-the-package)
 * [Available scripts](#available-scripts)
@@ -18,11 +23,11 @@ This package was created by the [ckeditor5-package-generator](https://www.npmjs.
   * [`translations:upload`](#translationsupload)
 * [License](#license)
 
-## Developing the package
+### Developing the package
 
 To read about the CKEditor 5 framework, visit the [CKEditor5 documentation](https://ckeditor.com/docs/ckeditor5/latest/framework/index.html).
 
-## Available scripts
+### Available scripts
 
 Npm scripts are a convenient way to provide commands in a project. They are defined in the `package.json` file and shared with other people contributing to the project. It ensures that developers use the same command with the same options (flags).
 
@@ -30,7 +35,7 @@ All the scripts can be executed by running `npm run <script>`. Pre and post comm
 
 The following scripts are available in the package.
 
-### `start`
+#### `start`
 
 Starts a HTTP server with the live-reload mechanism that allows previewing and testing plugins available in the package.
 
@@ -51,7 +56,7 @@ npm run start -- --no-open
 npm run start -- --language=de
 ```
 
-### `test`
+#### `test`
 
 Allows executing unit tests for the package, specified in the `tests/` directory. The command accepts the following modifiers:
 
@@ -70,7 +75,7 @@ npm run test
 npm run test -- --coverage --test
 ```
 
-### `lint`
+#### `lint`
 
 Runs ESLint, which analyzes the code (all `*.ts` files) to quickly find problems.
 
@@ -81,7 +86,7 @@ Examples:
 npm run lint
 ```
 
-### `stylelint`
+#### `stylelint`
 
 Similar to the `lint` task, stylelint analyzes the CSS code (`*.css` files in the `theme/` directory) in the package.
 
@@ -92,7 +97,7 @@ Examples:
 npm run stylelint
 ```
 
-### `dll:build`
+#### `dll:build`
 
 Creates a DLL-compatible package build which can be loaded into an editor using [DLL builds](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/dll-builds.html).
 
@@ -106,7 +111,7 @@ npm run dll:build
 npm run dll:build -- --watch
 ```
 
-### `dll:serve`
+#### `dll:serve`
 
 Creates a simple HTTP server (without the live-reload mechanism) that allows verifying whether the DLL build of the package is compatible with the CKEditor 5 [DLL builds](https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/dll-builds.html).
 
@@ -117,7 +122,7 @@ Examples:
 npm run dll:serve
 ```
 
-### `translations:collect`
+#### `translations:collect`
 
 Collects translation messages (arguments of the `t()` function) and context files, then validates whether the provided values do not interfere with the values specified in the `@ckeditor/ckeditor5-core` package.
 
@@ -133,7 +138,7 @@ Examples:
 npm run translations:collect
 ```
 
-### `translations:download`
+#### `translations:download`
 
 Download translations from the Transifex server. Depending on users' activity in the project, it creates translations files used for building the editor.
 
@@ -147,7 +152,7 @@ Examples:
 npm run translations:download -- --transifex [API URL]
 ```
 
-### `translations:upload`
+#### `translations:upload`
 
 Uploads translation messages onto the Transifex server. It allows for the creation of translations into other languages by users using the Transifex platform.
 

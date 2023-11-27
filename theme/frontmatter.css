@@ -1,0 +1,26 @@
+:root {
+	--ck-frontmatter-padding: 1em;
+	--ck-frontmatter-font: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+		Courier, monospace;
+	--ck-frontmatter-border: initial;
+	--ck-frontmatter-box-shadow: initial;
+	--ck-frontmatter-outline: none;
+	--ck-frontmatter-background: hsla(0,0%,78%,.3); 
+}
+
+.ck-content .frontmatter-container > .frontmatter {
+	font-family: var(--ck-frontmatter-font);
+	padding: var(--ck-frontmatter-padding);
+	border: var(--ck-frontmatter-border);
+	box-shadow: var(--ck-frontmatter-border-shadow);
+	outline: var(--ck-frontmatter-outline);
+	background-color: var(--ck-frontmatter-background);
+}
+
+.frontmatter::before,
+.frontmatter::after {
+	content: "---";
+	display: block; /* Makes sure dashes are on a new line */
+	user-select: none; /* Makes the content non-selectable */
+	pointer-events: none; /* Prevents interaction like hover, click, etc. */
+}
