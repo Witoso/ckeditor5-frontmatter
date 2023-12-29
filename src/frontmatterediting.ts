@@ -141,7 +141,9 @@ export default class FrontmatterEditing extends Plugin {
 			const dataWithHtmlFrontmatter = data.replace(
 				frontmatterRegex,
 				( _match, frontmatterContent ) => {
-					return `<section class="frontmatter-container"><div class="frontmatter">${ frontmatterContent }</div></section>`;
+					// Replace newlines with <br> for HTML display
+					const formattedFrontmatter = frontmatterContent.replace( /\n/g, '<br>' );
+					return `<section class="frontmatter-container"><div class="frontmatter">${ formattedFrontmatter }</div></section>`;
 				}
 			);
 			editor.data.set( dataWithHtmlFrontmatter );
@@ -150,7 +152,6 @@ export default class FrontmatterEditing extends Plugin {
 		editor.getDataWithFrontmatter = (): string => {
 			const data = editor.data.get();
 
-			// const fixedFrontmatter = data.replace( /\\---\n|\n\\---/g, '---\n' );
 			const fixedFrontmatter = data
 				.replace( /\\---\n*/g, '---\n' )
 				.replace( /\n{2,}/g, '\n' );

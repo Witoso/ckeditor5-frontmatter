@@ -88,11 +88,11 @@ describe( 'Frontmatter', () => {
 			expect( editor.getDataWithFrontmatter() ).to.equal( '' );
 
 			editor.setDataWithFrontmatter(
-				'---\ndraft: false\n---\n\n## Heading 1'
+				'---\ntitle: Title\ndraft: false\n---\n\n## Heading 1'
 			);
 
 			expect( editor.getDataWithFrontmatter() ).to.equal(
-				'---\ndraft: false\n---\n## Heading 1'
+				'---\ntitle: Title  \ndraft: false\n---\n## Heading 1'
 			);
 		} );
 
