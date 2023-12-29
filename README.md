@@ -1,7 +1,22 @@
 @witoso/ckeditor5-frontmatter
 =============================
 
+![Frontmatter Example](docs/screen.png "Example of Frontmatter Plugin")
 
+
+The Frontmatter Plugin for CKEditor 5 is an experimental project aimed at exploring plugin development capabilities within CKEditor 5. It provides basic functionality for handling frontmatter metadata in Markdown documents.
+
+While it offers a glimpse into integrating and managing frontmatter content, please note that this plugin is a developmental exercise and should be used cautiously in production environments. It's an ideal resource for those interested in the inner workings of CKEditor plugin development or in need of a simple frontmatter handling solution in their projects.
+
+## API
+
+* To load the content with a frontmatter use `editor.setDataWithFrontmatter( data )`. This was used to as the Mardkown pipeline by default treated `---` as headings, and it was diffcult to override.
+* To get the content with a frontmatter use `editor.getDataWithFrontmatter()`. This was done as Markdown pipeline by default escaped the borders, `\---`.
+
+### Caveats
+
+* Copying frontmatter and pasting won't work.
+* Will not work with an editor with multiple roots.
 
 
 ## Development
