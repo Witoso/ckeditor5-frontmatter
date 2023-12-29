@@ -180,9 +180,3 @@ Examples:
 ```bash
 npm run translations:upload -- --transifex [API URL]
 ```
-
-## License
-
-The `@witoso/ckeditor5-frontmatter` package is available under [MIT license](https://opensource.org/licenses/MIT).
-
-However, it is the default license of packages created by the [ckeditor5-package-generator](https://www.npmjs.com/package/ckeditor5-package-generator) package and it can be changed.
