@@ -1,6 +1,6 @@
 {
   "name": "@witoso/ckeditor5-frontmatter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A plugin for CKEditor 5 that handles markdown frontmatter.",
   "keywords": [
     "ckeditor",
@@ -79,7 +79,7 @@
     "stylelint": "stylelint --quiet --allow-empty-input 'theme/**/*.css'",
     "test": "ckeditor5-package-tools test",
     "prepare": "npm run dll:build",
-    "prepublishOnly": "npm run ts:build && ckeditor5-package-tools export-package-as-javascript",
+    "prepublishOnly": "npm run prepare && npm run ts:build && ckeditor5-package-tools export-package-as-javascript",
     "postpublish": "npm run ts:clear && ckeditor5-package-tools export-package-as-typescript",
     "translations:collect": "ckeditor5-package-tools translations:collect",
     "translations:download": "ckeditor5-package-tools translations:download",

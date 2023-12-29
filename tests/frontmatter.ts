@@ -92,7 +92,7 @@ describe( 'Frontmatter', () => {
 			);
 
 			expect( editor.getDataWithFrontmatter() ).to.equal(
-				'---\ntitle: Title  \ndraft: false\n---\n\n## Heading 1'
+				'---\ntitle: Title\ndraft: false\n---\n\n## Heading 1'
 			);
 		} );
 
@@ -124,6 +124,21 @@ describe( 'Frontmatter', () => {
 			expect( editor.getDataWithFrontmatter() ).to.equal(
 				'------\n\n## Heading 1'
 			);
+		} );
+
+		it( 'should be symmetrical', () => {
+			expect( editor.getDataWithFrontmatter() ).to.equal( '' );
+
+			const content = '---\ntitle: Title\ndraft: false\n---\n\n## Heading 1.';
+
+			editor.setDataWithFrontmatter( content );
+
+			expect( editor.getDataWithFrontmatter() ).to.equal(
+				content
+			);
+
+			editor.setDataWithFrontmatter( editor.getDataWithFrontmatter() );
+			expect( editor.getDataWithFrontmatter() ).to.equal( content );
 		} );
 	} );
 
@@ -173,7 +188,7 @@ describe( 'Frontmatter', () => {
 			const icon = editor.ui.componentFactory.create( 'frontmatter' );
 			icon.fire( 'execute' );
 
-			// The editor is hallucinating spaces a bit, easier to test this way.
+			// The test runner has some problem with spaces comparision.
 			expect( editor.getDataWithFrontmatter() ).to.contain(
 				'title:'
 			);

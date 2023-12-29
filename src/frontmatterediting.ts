@@ -153,9 +153,18 @@ export default class FrontmatterEditing extends Plugin {
 		editor.getDataWithFrontmatter = (): string => {
 			const data = editor.data.get();
 
-			const fixedFrontmatter = data
-				.replace( /\\>>>\n*/g, '---\n' )
-				.replace( /\n\\<\\<\\<\n*/g, '---\n\n' );
+			let fixedFrontmatter = data
+				.replace( /\\>>>\n*/g, '---\n' ) // Frontmatter start.
+				.replace( /\n\\<\\<\\<\n*/g, '---\n\n' ); // Frontmatter end.
+
+			fixedFrontmatter = fixedFrontmatter.replace(
+				/---\n([\s\S]*?)\n---/,
+				( _match, frontmatterContent ) => {
+					// Remove multiple consecutive spaces within frontmatter
+					const cleanedFrontmatter = frontmatterContent.replace( / {2,}/g, '' );
+					return `---\n${ cleanedFrontmatter }\n---`;
+				}
+			);
 
 			return fixedFrontmatter;
 		};
