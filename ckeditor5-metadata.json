@@ -3,11 +3,11 @@
     {
       "name": "Frontmatter",
       "className": "Frontmatter",
-      "description": "Adds text to the editor.",
+      "description": "Adds frontmatter to the editor.",
       "path": "src/frontmatter.ts",
       "uiComponents": [
         {
-          "name": "frontmatteron",
+          "name": "frontmatter",
           "type": "Button",
           "iconPath": "theme/icons/frontmatter.svg"
         }
