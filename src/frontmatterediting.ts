@@ -92,8 +92,9 @@ export default class FrontmatterEditing extends Plugin {
 			view: ( _model, conversionApi ) => {
 				const { writer } = conversionApi;
 
-				const frontmatterBorderStart = writer.createText( '---' );
-				const frontmatterBorderEnd = writer.createText( '---' );
+				// To easier replace borders in getDataWithFrontmatter we use unique border symbols.
+				const frontmatterBorderStart = writer.createText( '>>>' );
+				const frontmatterBorderEnd = writer.createText( '<<<' );
 
 				return writer.createContainerElement( 'section', {}, [
 					frontmatterBorderStart,
@@ -142,7 +143,7 @@ export default class FrontmatterEditing extends Plugin {
 				frontmatterRegex,
 				( _match, frontmatterContent ) => {
 					// Replace newlines with <br> for HTML display
-					const formattedFrontmatter = frontmatterContent.replace( /\n/g, '<br>' );
+					const formattedFrontmatter = frontmatterContent.replace( /\n+/g, '<br>' );
 					return `<section class="frontmatter-container"><div class="frontmatter">${ formattedFrontmatter }</div></section>`;
 				}
 			);
@@ -153,8 +154,8 @@ export default class FrontmatterEditing extends Plugin {
 			const data = editor.data.get();
 
 			const fixedFrontmatter = data
-				.replace( /\\---\n*/g, '---\n' )
-				.replace( /\n{2,}/g, '\n' );
+				.replace( /\\>>>\n*/g, '---\n' )
+				.replace( /\n\\<\\<\\<\n*/g, '---\n\n' );
 
 			return fixedFrontmatter;
 		};

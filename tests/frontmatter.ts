@@ -81,7 +81,7 @@ describe( 'Frontmatter', () => {
 
 			icon.fire( 'execute' );
 
-			expect( editor.getDataWithFrontmatter() ).to.equal( '---\n---\n' );
+			expect( editor.getDataWithFrontmatter() ).to.equal( '------\n\n' );
 		} );
 
 		it( 'should set/get frontmatter correctly from the data', () => {
@@ -92,7 +92,7 @@ describe( 'Frontmatter', () => {
 			);
 
 			expect( editor.getDataWithFrontmatter() ).to.equal(
-				'---\ntitle: Title  \ndraft: false\n---\n## Heading 1'
+				'---\ntitle: Title  \ndraft: false\n---\n\n## Heading 1'
 			);
 		} );
 
@@ -122,7 +122,7 @@ describe( 'Frontmatter', () => {
 			} );
 
 			expect( editor.getDataWithFrontmatter() ).to.equal(
-				'---\n---\n## Heading 1'
+				'------\n\n## Heading 1'
 			);
 		} );
 	} );

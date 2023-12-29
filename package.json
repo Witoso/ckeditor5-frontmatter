@@ -1,6 +1,6 @@
 {
   "name": "@witoso/ckeditor5-frontmatter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A plugin for CKEditor 5 that handles markdown frontmatter.",
   "keywords": [
     "ckeditor",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Witoso/ckeditor5-frontmatter/"
+    "url": "git+https://github.com/Witoso/ckeditor5-frontmatter/"
   },
   "files": [
     "lang",
