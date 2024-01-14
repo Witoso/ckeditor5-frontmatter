@@ -129,13 +129,12 @@ describe( 'Frontmatter', () => {
 		it( 'should be symmetrical', () => {
 			expect( editor.getDataWithFrontmatter() ).to.equal( '' );
 
-			const content = '---\ntitle: Title\ndraft: false\n---\n\n## Heading 1.';
+			const content =
+				'---\ntitle: Title\ndraft: false\n---\n\n## Heading 1.';
 
 			editor.setDataWithFrontmatter( content );
 
-			expect( editor.getDataWithFrontmatter() ).to.equal(
-				content
-			);
+			expect( editor.getDataWithFrontmatter() ).to.equal( content );
 
 			editor.setDataWithFrontmatter( editor.getDataWithFrontmatter() );
 			expect( editor.getDataWithFrontmatter() ).to.equal( content );
@@ -162,19 +161,11 @@ describe( 'Frontmatter', () => {
 					Markdown
 				],
 				toolbar: [ 'frontmatter' ],
-				frontmatter: new Map(
-					[
-						[
-							'title', ''
-						],
-						[
-							'draft', 'true'
-						],
-						[
-							'date', '$currentDate'
-						]
-					]
-				)
+				frontmatter: new Map( [
+					[ 'title', '' ],
+					[ 'draft', 'true' ],
+					[ 'date', '$currentDate' ]
+				] )
 			} );
 		} );
 
@@ -189,12 +180,8 @@ describe( 'Frontmatter', () => {
 			icon.fire( 'execute' );
 
 			// The test runner has some problem with spaces comparision.
-			expect( editor.getDataWithFrontmatter() ).to.contain(
-				'title:'
-			);
-			expect( editor.getDataWithFrontmatter() ).to.contain(
-				'draft: true'
-			);
+			expect( editor.getDataWithFrontmatter() ).to.contain( 'title:' );
+			expect( editor.getDataWithFrontmatter() ).to.contain( 'draft: true' );
 			expect( editor.getDataWithFrontmatter() ).to.contain(
 				'date: 2023-10-01'
 			);
