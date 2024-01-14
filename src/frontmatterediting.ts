@@ -143,10 +143,9 @@ export default class FrontmatterEditing extends Plugin {
 				frontmatterRegex,
 				( _match, frontmatterContent ) => {
 					// Replace newlines with <br> for HTML display
-					const formattedFrontmatter = frontmatterContent.replace(
-						/\n+/g,
-						'<br>'
-					);
+					const formattedFrontmatter = frontmatterContent
+						.replace( /\n+/g, '<br>' )
+						.replace( /\\+([[\]\-_>"'])/g, '$1' ); // yaml frontmatter can have unescaped chars like [, > or -
 					return `<section class="frontmatter-container"><div class="frontmatter">${ formattedFrontmatter }</div></section>`;
 				}
 			);
@@ -166,8 +165,7 @@ export default class FrontmatterEditing extends Plugin {
 					// Remove multiple consecutive spaces within frontmatter
 					const cleanedFrontmatter = frontmatterContent
 						.replace( / {2,}/g, '' )
-						.replace( /\\([[\]\->])/g, '$1' ); // yaml frontmatter can have unescaped chars like [, > or -
-
+						.replace( /\\+([[\]\-_>"'])/g, '$1' ); // yaml frontmatter can have unescaped chars like [, > or -
 					return `---\n${ cleanedFrontmatter }\n---`;
 				}
 			);
