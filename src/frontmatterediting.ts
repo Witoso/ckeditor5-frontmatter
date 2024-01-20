@@ -1,7 +1,12 @@
 import { Plugin } from 'ckeditor5/src/core';
-import type { DocumentSelection } from 'ckeditor5/src/engine';
 import { toWidgetEditable, Widget } from 'ckeditor5/src/widget';
 import InsertFrontmatterCommand from './insertfrontmattercommand';
+import {
+	findFrontmatterContainer,
+	inFrontmatter,
+	isFrontmatterEnd,
+	removeSoftBreakBeforeSelection
+} from './utils';
 
 export default class FrontmatterEditing extends Plugin {
 	public static get requires() {
@@ -181,25 +186,42 @@ export default class FrontmatterEditing extends Plugin {
 		editor.editing.view.document.on(
 			'enter',
 			( evt, data ) => {
-				if ( selection.isCollapsed && this._inFrontmatter( selection ) ) {
+				if ( !inFrontmatter( selection ) ) {
+					return;
+				}
+
+				if ( isFrontmatterEnd( selection ) ) {
+					const frontmatterContainer =
+						findFrontmatterContainer( selection );
+
+					if ( !frontmatterContainer ) {
+						return;
+					}
+
+					removeSoftBreakBeforeSelection( selection, editor.model );
+
+					editor.model.change( writer => {
+						const positionAfterElement =
+							writer.createPositionAfter( frontmatterContainer );
+
+						editor.execute( 'insertParagraph', {
+							position: positionAfterElement
+						} );
+					} );
+
+					// Still need to prevent the enter.
 					data.preventDefault();
 					evt.stop();
-
+					editor.editing.view.scrollToTheSelection();
+				} else {
+					data.preventDefault();
+					evt.stop();
 					editor.execute( 'shiftEnter' );
 					editor.editing.view.scrollToTheSelection();
 				}
 			},
 			{ priority: 'high' }
 		);
-	}
-
-	private _inFrontmatter( selection: DocumentSelection ) {
-		const firstPosition = selection.getFirstPosition();
-		if ( firstPosition?.findAncestor( 'frontmatter' ) ) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	private _registerFrontmatterPostfixer() {
@@ -224,6 +246,7 @@ export default class FrontmatterEditing extends Plugin {
 
 			const range = model.createRangeIn( root );
 
+			// TODO: rewrite to Differ.
 			for ( const value of range.getWalker() ) {
 				if ( value.item.is( 'element', 'frontmatterContainer' ) ) {
 					const startPosition = model.createPositionAt( root, 0 );

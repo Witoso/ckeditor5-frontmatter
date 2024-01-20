@@ -33,6 +33,7 @@ import { Markdown } from '@ckeditor/ckeditor5-markdown-gfm';
 import Frontmatter from '../src/frontmatter';
 
 ClassicEditor.create( document.getElementById( 'editor' )!, {
+	placeholder: 'Start writing...',
 	plugins: [
 		Frontmatter,
 		Markdown,

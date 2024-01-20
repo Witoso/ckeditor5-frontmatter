@@ -6,7 +6,10 @@ export default class InsertFrontmatterCommand extends Command {
 	public declare value: boolean;
 	private _frontmatterConfig: FrontmatterConfig | undefined;
 
-	constructor( editor: Editor, frontmatterConfig: FrontmatterConfig | undefined ) {
+	constructor(
+		editor: Editor,
+		frontmatterConfig: FrontmatterConfig | undefined
+	) {
 		super( editor );
 		this._frontmatterConfig = frontmatterConfig;
 	}
@@ -24,6 +27,8 @@ export default class InsertFrontmatterCommand extends Command {
 			const frontmatterContainer = this._createFrontmatter( writer );
 
 			this.editor.model.insertObject( frontmatterContainer, startPosition );
+			// If there's a paragraph with a placeholder, and we insert frontmatter, frontmatter hijacks it.
+			this.editor.editing.view.document.getRoot( 'main' )!.placeholder = '';
 		} );
 	}
 
@@ -84,7 +89,7 @@ export default class InsertFrontmatterCommand extends Command {
 	private _getCurrentDate() {
 		let date = new Date();
 		const offset = date.getTimezoneOffset();
-		date = new Date( date.getTime() - ( offset * 60 * 1000 ) );
+		date = new Date( date.getTime() - offset * 60 * 1000 );
 		return date.toISOString().split( 'T' )[ 0 ];
 	}
 }
