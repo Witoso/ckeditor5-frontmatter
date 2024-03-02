@@ -134,7 +134,9 @@ export default class FrontmatterEditing extends Plugin {
 		conversion.for( 'dataDowncast' ).elementToElement( {
 			model: 'frontmatter',
 			view: {
-				name: 'div'
+				// We use custom element if someone would like to
+				// keepHtml div for example.
+				name: 'frontmatter'
 			}
 		} );
 	}
@@ -162,7 +164,7 @@ export default class FrontmatterEditing extends Plugin {
 
 			let fixedFrontmatter = data
 				.replace( /\\>>>\n*/g, '---\n' ) // Frontmatter start.
-				.replace( /\n\\<\\<\\<\n*/g, '---\n\n' ); // Frontmatter end.
+				.replace( /\\<\\<\\<\n*/g, '\n---\n\n' ); // Frontmatter end.
 
 			fixedFrontmatter = fixedFrontmatter.replace(
 				/---\n([\s\S]*?)\n---/,

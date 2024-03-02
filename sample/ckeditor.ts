@@ -28,6 +28,7 @@ import { MediaEmbed } from '@ckeditor/ckeditor5-media-embed';
 import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
 import { Table, TableToolbar } from '@ckeditor/ckeditor5-table';
 import { Base64UploadAdapter } from '@ckeditor/ckeditor5-upload';
+import type GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor';
 import { Markdown } from '@ckeditor/ckeditor5-markdown-gfm';
 
 import Frontmatter from '../src/frontmatter';
@@ -98,6 +99,8 @@ ClassicEditor.create( document.getElementById( 'editor' )!, {
 } )
 	.then( editor => {
 		window.editor = editor;
+		const gfm = editor.data.processor as GFMDataProcessor;
+		gfm.keepHtml( 'div' );
 		CKEditorInspector.attach( editor );
 		window.console.log( 'CKEditor 5 is ready.', editor );
 
