@@ -1,12 +1,12 @@
-import { Plugin } from 'ckeditor5/src/core';
-import { toWidgetEditable, Widget } from 'ckeditor5/src/widget';
-import InsertFrontmatterCommand from './insertfrontmattercommand';
+import { Plugin } from 'ckeditor5';
+import { toWidgetEditable, Widget } from 'ckeditor5';
+import InsertFrontmatterCommand from './insertfrontmattercommand.js';
 import {
 	findFrontmatterContainer,
 	inFrontmatter,
 	isFrontmatterEnd,
 	removeSoftBreakBeforeSelection
-} from './utils';
+} from './utils.js';
 
 export default class FrontmatterEditing extends Plugin {
 	public static get requires() {

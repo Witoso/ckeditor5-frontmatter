@@ -1,9 +1,9 @@
 .DS_Store
-build/
 coverage/
 node_modules/
 tmp/
 sample/ckeditor.dist.js
+dist/
 
 # Ignore compiled TypeScript files.
 src/**/*.js

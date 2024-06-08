@@ -1,6 +1,6 @@
-import { type Editor, Command } from 'ckeditor5/src/core';
-import type { Writer } from 'ckeditor5/src/engine';
-import type { FrontmatterConfig } from './frontmatterconfig';
+import { type Editor, Command } from 'ckeditor5';
+import type { Writer } from 'ckeditor5';
+import type { FrontmatterConfig } from './frontmatterconfig.js';
 
 export default class InsertFrontmatterCommand extends Command {
 	public declare value: boolean;

@@ -1,7 +1,7 @@
 import frontmatter from './../theme/icons/frontmatter.svg';
-import './augmentation';
+import './augmentation.js';
 
-export { default as Frontmatter } from './frontmatter';
+export { default as Frontmatter } from './frontmatter.js';
 
 export const icons = {
 	frontmatter

@@ -22,5 +22,6 @@
     "./src",
     "./tests",
     "./typings"
-  ]
+  ],
+  "exclude": ["dist"]
 }

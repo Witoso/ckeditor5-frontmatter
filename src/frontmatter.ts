@@ -1,6 +1,6 @@
-import { Plugin } from 'ckeditor5/src/core';
-import FrontmatterEditing from './frontmatterediting';
-import FrontmatterUI from './frontmatterui';
+import { Plugin } from 'ckeditor5';
+import FrontmatterEditing from './frontmatterediting.js';
+import FrontmatterUI from './frontmatterui.js';
 
 export default class Frontmatter extends Plugin {
 	public static get pluginName() {

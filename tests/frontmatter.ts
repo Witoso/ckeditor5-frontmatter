@@ -1,12 +1,8 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { Essentials } from '@ckeditor/ckeditor5-essentials';
-import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
-import { Heading } from '@ckeditor/ckeditor5-heading';
-import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
-import Frontmatter from '../src/frontmatter';
-import { Markdown } from '@ckeditor/ckeditor5-markdown-gfm';
+import { Frontmatter } from '../dist/index.js';
+import { ClassicEditor, Essentials, Heading, Markdown, Paragraph } from 'ckeditor5';
 
 describe( 'Frontmatter', () => {
 	it( 'should be named', () => {
@@ -81,7 +77,9 @@ describe( 'Frontmatter', () => {
 
 			icon.fire( 'execute' );
 
-			expect( editor.getDataWithFrontmatter() ).to.equal( '---\n \n---\n\n' );
+			const expected = '---\n\u00A0\n---\n\n';
+
+			expect( editor.getDataWithFrontmatter() ).to.equal( expected );
 		} );
 
 		it( 'should set/get frontmatter correctly from the data', () => {
@@ -122,7 +120,7 @@ describe( 'Frontmatter', () => {
 			} );
 
 			expect( editor.getDataWithFrontmatter() ).to.equal(
-				'---\n \n---\n\n## Heading 1'
+				'---\n\u00A0\n---\n\n## Heading 1'
 			);
 		} );
 

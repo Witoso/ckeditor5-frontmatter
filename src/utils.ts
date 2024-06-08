@@ -1,4 +1,4 @@
-import type { DocumentSelection, Element, Model } from 'ckeditor5/src/engine';
+import type { DocumentSelection, Element, Model } from 'ckeditor5';
 
 export function isFrontmatterEnd( selection: DocumentSelection ): boolean {
 	const range = selection.getFirstRange();

@@ -1,6 +1,6 @@
-import { ButtonView } from 'ckeditor5/src/ui';
-import { Plugin } from 'ckeditor5/src/core';
-import type InsertFrontmatterCommand from './insertfrontmattercommand';
+import { ButtonView } from 'ckeditor5';
+import { Plugin } from 'ckeditor5';
+import type InsertFrontmatterCommand from './insertfrontmattercommand.js';
 import frontmatterIcon from '../theme/icons/frontmatter.svg';
 
 import '../theme/frontmatter.css';
