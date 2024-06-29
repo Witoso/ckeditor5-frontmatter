@@ -6,9 +6,12 @@ declare global {
 
 import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
 
-import { Autoformat, Base64UploadAdapter, BlockQuote, Bold, ClassicEditor, Code, CodeBlock, Essentials, Heading, Image, ImageCaption, ImageStyle, ImageToolbar, ImageUpload, Indent, Italic, Link, List, Markdown, MediaEmbed, Paragraph, Table, TableToolbar } from 'ckeditor5';
+import {
+	Autoformat, Base64UploadAdapter, BlockQuote, Bold, ClassicEditor, Code, CodeBlock,
+	Essentials, Heading, Image, ImageCaption, ImageStyle, ImageToolbar, ImageUpload, Indent,
+	Italic, Link, List, Markdown, MediaEmbed, Paragraph, Table, TableToolbar } from 'ckeditor5';
 
-import type GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor';
+import type GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor.js';
 
 import { Frontmatter } from '../dist/index.js';
 

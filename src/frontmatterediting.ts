@@ -1,5 +1,4 @@
-import { Plugin } from 'ckeditor5';
-import { toWidgetEditable, Widget } from 'ckeditor5';
+import { Plugin, toWidgetEditable, Widget } from 'ckeditor5';
 import InsertFrontmatterCommand from './insertfrontmattercommand.js';
 import {
 	findFrontmatterContainer,

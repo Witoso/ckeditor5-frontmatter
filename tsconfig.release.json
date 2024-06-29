@@ -2,12 +2,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
-    "declaration": true,
-	"skipLibCheck": true
+    "declaration": true
   },
   "exclude": [
     "./tests/",
-    "./sample/",
-	"./src/"
+	"./src",
+    "./sample/"
   ]
 }

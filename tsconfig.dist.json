@@ -1,12 +1,11 @@
 {
   "extends": "./tsconfig.json",
-	"compilerOptions": {
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"rootDir": "./src",
-		"types": [
-			"../typings/types"
-		],
-		"lib": ["ES6"]
-	}
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "rootDir": "./src",
+    "types": [
+      "../typings/types"
+    ]
+  }
 }
