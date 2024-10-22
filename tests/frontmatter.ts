@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 
-import { Frontmatter } from '../dist/index.js';
+import Frontmatter from '../src/frontmatter.js';
 import { ClassicEditor, Essentials, Heading, Markdown, Paragraph } from 'ckeditor5';
 
 describe( 'Frontmatter', () => {

@@ -13,7 +13,7 @@ import {
 
 import type GFMDataProcessor from '@ckeditor/ckeditor5-markdown-gfm/src/gfmdataprocessor.js';
 
-import { Frontmatter } from '../dist/index.js';
+import Frontmatter from '../src/frontmatter.js';
 
 import 'ckeditor5/ckeditor5.css';
 import '../dist/index.css';
