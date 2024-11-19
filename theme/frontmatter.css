@@ -3,18 +3,23 @@
 	--ck-frontmatter-font: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
 		Courier, monospace;
 	--ck-frontmatter-border: initial;
+	--ck-frontmatter-border-focus: none;
 	--ck-frontmatter-box-shadow: initial;
 	--ck-frontmatter-outline: none;
-	--ck-frontmatter-background: hsla(0,0%,78%,.3); 
+	--ck-frontmatter-background: hsla(0,0%,78%,.3);
 }
 
-.ck-content .frontmatter-container > .frontmatter {
+.ck .frontmatter-container > .frontmatter {
 	font-family: var(--ck-frontmatter-font);
 	padding: var(--ck-frontmatter-padding);
 	border: var(--ck-frontmatter-border);
 	box-shadow: var(--ck-frontmatter-border-shadow);
 	outline: var(--ck-frontmatter-outline);
 	background-color: var(--ck-frontmatter-background);
+}
+
+.ck .frontmatter.ck-editor__nested-editable.ck-editor__nested-editable_focused:not(td,th)  {
+	border: var(--ck-frontmatter-border-focus);
 }
 
 .frontmatter::before,

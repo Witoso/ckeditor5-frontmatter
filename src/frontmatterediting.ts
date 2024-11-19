@@ -1,4 +1,4 @@
-import { Plugin, toWidgetEditable, Widget } from 'ckeditor5';
+import { Plugin, toWidget, toWidgetEditable, Widget } from 'ckeditor5';
 import InsertFrontmatterCommand from './insertfrontmattercommand.js';
 import {
 	findFrontmatterContainer,
@@ -25,6 +25,8 @@ export default class FrontmatterEditing extends Plugin {
 		// Move frontmatter to the top.
 		this._registerFrontmatterPostfixer();
 
+		this._selectionHandling();
+
 		// TODO fix the HTML clipboard. The frontmatter is not detected on paste.
 
 		// Access the configuration
@@ -39,7 +41,6 @@ export default class FrontmatterEditing extends Plugin {
 	private _defineSchema() {
 		const editor = this.editor;
 		const schema = editor.model.schema;
-		const root = editor.model.document.getRoot();
 
 		schema.register( 'frontmatterContainer', {
 			inheritAllFrom: '$blockObject'
@@ -49,17 +50,6 @@ export default class FrontmatterEditing extends Plugin {
 			isLimit: true,
 			allowContentOf: '$block',
 			allowIn: 'frontmatterContainer'
-		} );
-
-		// Add a check to ensure only one frontmatterContainer is created
-		schema.addChildCheck( ( _context, childDefinition ) => {
-			if ( childDefinition.name === 'frontmatterContainer' && root ) {
-				for ( const child of root.getChildren() ) {
-					if ( child.is( 'element', 'frontmatterContainer' ) ) {
-						return false;
-					}
-				}
-			}
 		} );
 
 		// Add a check to disallow attributes inside frontmatter.
@@ -266,5 +256,29 @@ export default class FrontmatterEditing extends Plugin {
 			// No changes were made
 			return false;
 		} );
+	}
+
+	private _selectionHandling() {
+		const model = this.editor.model;
+		const selection = model.document.selection;
+
+		selection.on( 'change:range', () => {
+			// Check if the selection is on the entire frontmatterContainer
+			const selectedElement = selection.getSelectedElement();
+
+			// If there is no selected element or it's not the frontmatterContainer, return early
+			if ( !selectedElement || !selectedElement.is( 'element', 'frontmatterContainer' ) ) {
+				return;
+			}
+
+			// If the whole frontmatterContainer is selected, move the selection to the end of the frontmatter.
+			const frontmatter = selectedElement.getChild( 0 );
+			if ( frontmatter && frontmatter.is( 'element', 'frontmatter' ) ) {
+				// Move selection to the end of the frontmatter content
+				model.change( writer => {
+					writer.setSelection( frontmatter, 'end' );
+				} );
+			}
+		}, { priority: 'high' } ); // Setting high priority here
 	}
 }
