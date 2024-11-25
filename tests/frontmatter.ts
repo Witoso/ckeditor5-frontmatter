@@ -70,14 +70,14 @@ describe( 'Frontmatter', () => {
 			return editor.destroy();
 		} );
 
-		it( 'should add an empty frontmatter into the editor after clicking the icon', () => {
+		it( 'empty frontmatter and editor will return empty', () => {
 			const icon = editor.ui.componentFactory.create( 'frontmatter' );
 
 			expect( editor.getDataWithFrontmatter() ).to.equal( '' );
 
 			icon.fire( 'execute' );
 
-			const expected = '---\n\u00A0\n---\n\n';
+			const expected = '';
 
 			expect( editor.getDataWithFrontmatter() ).to.equal( expected );
 		} );

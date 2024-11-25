@@ -3,6 +3,9 @@ import type { FrontmatterConfig } from './frontmatterconfig.js';
 
 export default class InsertFrontmatterCommand extends Command {
 	public declare value: boolean;
+
+	public declare frontmatterLoaded: boolean;
+
 	private _frontmatterConfig: FrontmatterConfig | undefined;
 
 	constructor(
@@ -11,6 +14,11 @@ export default class InsertFrontmatterCommand extends Command {
 	) {
 		super( editor );
 		this._frontmatterConfig = frontmatterConfig;
+
+		const frontmatterEditing = editor.plugins.get( 'FrontmatterEditing' );
+
+		this.bind( 'frontmatterLoaded' )
+			.to( frontmatterEditing, 'frontmatterLoaded' );
 	}
 
 	public override execute(): void {
@@ -25,7 +33,7 @@ export default class InsertFrontmatterCommand extends Command {
 			const startPosition = writer.createPositionAt( root, 0 );
 			const frontmatterContainer = this._createFrontmatter( writer );
 
-			this.editor.model.insertObject( frontmatterContainer, startPosition );
+			this.editor.model.insertContent( frontmatterContainer, startPosition );
 			// If there's a paragraph with a placeholder, and we insert frontmatter, frontmatter hijacks it.
 			this.editor.editing.view.document.getRoot( 'main' )!.placeholder = '';
 		} );
@@ -45,7 +53,8 @@ export default class InsertFrontmatterCommand extends Command {
 			);
 		}
 
-		this.isEnabled = allowedIn !== null;
+		const allowed = allowedIn !== null;
+		this.isEnabled = allowed && !this.frontmatterLoaded;
 	}
 
 	private _createFrontmatter( writer: Writer ) {

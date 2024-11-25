@@ -1,4 +1,4 @@
-import { Plugin, toWidget, toWidgetEditable, Widget } from 'ckeditor5';
+import { Plugin, type Editor } from 'ckeditor5';
 import InsertFrontmatterCommand from './insertfrontmattercommand.js';
 import {
 	findFrontmatterContainer,
@@ -8,8 +8,17 @@ import {
 } from './utils.js';
 
 export default class FrontmatterEditing extends Plugin {
-	public static get requires() {
-		return [ Widget ] as const;
+	public static get pluginName() {
+		return 'FrontmatterEditing' as const;
+	}
+
+	declare public frontmatterLoaded: boolean;
+
+	constructor( editor: Editor ) {
+		super( editor );
+
+		// Define an observable property
+		this.set( 'frontmatterLoaded', false );
 	}
 
 	public init(): void {
@@ -24,8 +33,6 @@ export default class FrontmatterEditing extends Plugin {
 
 		// Move frontmatter to the top.
 		this._registerFrontmatterPostfixer();
-
-		this._selectionHandling();
 
 		// TODO fix the HTML clipboard. The frontmatter is not detected on paste.
 
@@ -43,13 +50,17 @@ export default class FrontmatterEditing extends Plugin {
 		const schema = editor.model.schema;
 
 		schema.register( 'frontmatterContainer', {
-			inheritAllFrom: '$blockObject'
+			inheritAllFrom: '$container',
+			allowIn: '$root'
 		} );
 
 		schema.register( 'frontmatter', {
-			isLimit: true,
-			allowContentOf: '$block',
-			allowIn: 'frontmatterContainer'
+			allowIn: 'frontmatterContainer',
+			allowChildren: '$text',
+			// Disallow `$inlineObject` and its derivatives like `inlineWidget` inside `codeBlock` to ensure that only text,
+			// not other inline elements like inline images, are allowed. This maintains the semantic integrity of code blocks.
+			disallowChildren: '$inlineObject',
+			isBlock: true
 		} );
 
 		// Add a check to disallow attributes inside frontmatter.
@@ -110,13 +121,11 @@ export default class FrontmatterEditing extends Plugin {
 		// Model to View conversion.
 		conversion.for( 'editingDowncast' ).elementToElement( {
 			model: 'frontmatter',
-			view: ( _modelElement, { writer: viewWriter } ) => {
-				const widgetElement = viewWriter.createEditableElement( 'div', {
-					class: 'frontmatter'
-				} );
-
-				// Enable widget handling on this element
-				return toWidgetEditable( widgetElement, viewWriter );
+			view: {
+				// We use custom element if someone would like to
+				// keepHtml div for example.
+				name: 'div',
+				classes: 'frontmatter'
 			}
 		} );
 
@@ -217,39 +226,52 @@ export default class FrontmatterEditing extends Plugin {
 
 	private _registerFrontmatterPostfixer() {
 		const model = this.editor.model;
+		const document = model.document;
 
-		model.document.registerPostFixer( writer => {
-			const root = model.document.getRoot();
+		document.registerPostFixer( writer => {
+			const root = document.getRoot();
 
 			if ( !root ) {
 				return false;
 			}
 
-			const frontmatterContainer = root.getChild( 0 );
+			const changes = document.differ.getChanges();
 
-			if (
-				frontmatterContainer &&
-				frontmatterContainer.is( 'element', 'frontmatterContainer' )
-			) {
-				// If the frontmatterContainer is already at the top, no change is needed
-				return false;
-			}
+			for ( const entry of changes ) {
+				if ( entry.type == 'insert' && entry.name === 'frontmatterContainer' ) {
+					this.set( 'frontmatterLoaded', true );
 
-			const range = model.createRangeIn( root );
+					const possibleFrontmatterContainer = root.getChild( 0 );
 
-			// TODO: rewrite to Differ.
-			for ( const value of range.getWalker() ) {
-				if ( value.item.is( 'element', 'frontmatterContainer' ) ) {
+					if (
+						possibleFrontmatterContainer &&
+						possibleFrontmatterContainer.is( 'element', 'frontmatterContainer' )
+					) {
+						// If the frontmatterContainer is already at the top, no change is needed
+						return false;
+					}
+
+					const frontmatterContainer = entry.position.nodeAfter;
+
+					if ( !frontmatterContainer ) {
+						return false;
+					}
+
 					const startPosition = model.createPositionAt( root, 0 );
 
 					// Move the frontmatterContainer to the start of the document
 					writer.move(
-						writer.createRangeOn( value.item ),
+						writer.createRangeOn( frontmatterContainer ),
 						startPosition
 					);
 
 					// Indicate that changes were made
 					return true;
+				}
+
+				// const range = model.createRangeIn( root );
+				if ( entry.type == 'remove' && entry.name === 'frontmatterContainer' ) {
+					this.set( 'frontmatterLoaded', false );
 				}
 			}
 
@@ -257,28 +279,5 @@ export default class FrontmatterEditing extends Plugin {
 			return false;
 		} );
 	}
-
-	private _selectionHandling() {
-		const model = this.editor.model;
-		const selection = model.document.selection;
-
-		selection.on( 'change:range', () => {
-			// Check if the selection is on the entire frontmatterContainer
-			const selectedElement = selection.getSelectedElement();
-
-			// If there is no selected element or it's not the frontmatterContainer, return early
-			if ( !selectedElement || !selectedElement.is( 'element', 'frontmatterContainer' ) ) {
-				return;
-			}
-
-			// If the whole frontmatterContainer is selected, move the selection to the end of the frontmatter.
-			const frontmatter = selectedElement.getChild( 0 );
-			if ( frontmatter && frontmatter.is( 'element', 'frontmatter' ) ) {
-				// Move selection to the end of the frontmatter content
-				model.change( writer => {
-					writer.setSelection( frontmatter, 'end' );
-				} );
-			}
-		}, { priority: 'high' } ); // Setting high priority here
-	}
 }
+
